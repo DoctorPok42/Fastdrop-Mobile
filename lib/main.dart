@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -30,7 +31,13 @@ class MyAppState extends ChangeNotifier {
   final current = WordPair.random();
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool isPressed = false;
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<MyAppState>();
@@ -41,34 +48,37 @@ class MyHomePage extends StatelessWidget {
         children: [
           Spacer(),
           Center(
-              child: ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(Color.fromRGBO(56, 182, 255, 1))),
-            onPressed: () {
-              print("Se connecte");
-              Text("Salut");
-            },
-            child: Text(
-              "Se connecter",
-              style: TextStyle(color: Colors.white),
-            ),
-          )),
+              child: isPressed
+                  ? ConnectButton()
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromRGBO(56, 182, 255, 1))),
+                      onPressed: () {
+                        setState(() {
+                          isPressed = !isPressed;
+                        });
+                        print("salut");
+                        ConnectButton();
+                      },
+                      child: Text(
+                        "Se connecter",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )),
           Spacer(),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: Image(
               image: ResizeImage(AssetImage('assets/logo.ico'),
-                  width: 70, height: 65),
+                  width: 55, height: 50),
             ),
           ),
           Container(
             margin: EdgeInsets.only(bottom: 10),
             child: RichText(
               text: TextSpan(
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                   children: <TextSpan>[
                     TextSpan(text: "You are known as "),
                     TextSpan(
@@ -80,11 +90,39 @@ class MyHomePage extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 10),
             child: Text(
               "You can be discovered by everyone on this network",
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: Colors.blue, fontSize: 12),
             ),
           )
         ],
       ),
     );
+  }
+
+  ConnectButton() {
+    return (SizedBox(
+        width: 75,
+        height: 75,
+        child: FloatingActionButton(
+          onPressed: () => {
+            showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: 400,
+                    child: Center(
+                      child: ElevatedButton(
+                          onPressed: (() {}), child: Text("File")),
+                    ),
+                  );
+                })
+          },
+          backgroundColor: Color.fromRGBO(56, 182, 255, 1),
+          shape: CircleBorder(),
+          child: Icon(
+            Icons.laptop,
+            size: 35,
+            color: Colors.white,
+          ),
+        )));
   }
 }
