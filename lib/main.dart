@@ -1,6 +1,8 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_everything_mobile/components/connect_button.dart';
+import 'package:share_everything_mobile/components/bottom_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,7 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         setState(() {
                           isPressed = !isPressed;
                         });
-                        print("salut");
                         ConnectButton();
                       },
                       child: Text(
@@ -66,62 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     )),
           Spacer(),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Image(
-              image: ResizeImage(AssetImage('assets/logo.ico'),
-                  width: 55, height: 50),
-            ),
+          BottomPage(
+            label: "Logards",
+            pathImage: "assets/logo.ico",
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: RichText(
-              text: TextSpan(
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                  children: <TextSpan>[
-                    TextSpan(text: "You are known as "),
-                    TextSpan(
-                        text: "Logards", style: TextStyle(color: Colors.orange))
-                  ]),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10),
-            child: Text(
-              "You can be discovered by everyone on this network",
-              style: TextStyle(color: Colors.blue, fontSize: 12),
-            ),
-          )
         ],
       ),
     );
-  }
-
-  ConnectButton() {
-    return (SizedBox(
-        width: 75,
-        height: 75,
-        child: FloatingActionButton(
-          onPressed: () => {
-            showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    height: 400,
-                    child: Center(
-                      child: ElevatedButton(
-                          onPressed: (() {}), child: Text("File")),
-                    ),
-                  );
-                })
-          },
-          backgroundColor: Color.fromRGBO(56, 182, 255, 1),
-          shape: CircleBorder(),
-          child: Icon(
-            Icons.laptop,
-            size: 35,
-            color: Colors.white,
-          ),
-        )));
   }
 }
