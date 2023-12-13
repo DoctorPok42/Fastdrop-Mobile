@@ -1,7 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share_everything_mobile/components/connect_button.dart';
+import 'package:share_everything_mobile/components/main_button.dart';
 import 'package:share_everything_mobile/components/bottom_page.dart';
 
 void main() {
@@ -48,24 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacer(),
-          Center(
-              child: isPressed
-                  ? ConnectButton()
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Color.fromRGBO(56, 182, 255, 1))),
-                      onPressed: () {
-                        setState(() {
-                          isPressed = !isPressed;
-                        });
-                        ConnectButton();
-                      },
-                      child: Text(
-                        "Se connecter",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )),
+          MainButton(),
           Spacer(),
           BottomPage(
             label: "Logards",

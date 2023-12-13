@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:share_everything_mobile/components/file_button.dart';
+import 'package:share_everything_mobile/components/text_button.dart';
 
 class ConnectButton extends StatelessWidget {
   ConnectButton({
     super.key,
-
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +19,11 @@ class ConnectButton extends StatelessWidget {
                 builder: (BuildContext context) {
                   return SizedBox(
                     height: 400,
-                    child: Center(
-                      child: ElevatedButton(
-                          onPressed: (() {}), child: Text("File")),
+                    child: Column(
+                      children: [
+                        FileButton(),
+                        ButtonText(),
+                      ],
                     ),
                   );
                 })
