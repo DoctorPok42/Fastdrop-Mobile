@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_everything_mobile/components/main_button.dart';
 import 'package:share_everything_mobile/components/bottom_page.dart';
+import 'package:share_everything_mobile/code/connection.dart';
 
 void main() {
   runApp(MyApp());
+  connection();
 }
 
 class MyApp extends StatelessWidget {

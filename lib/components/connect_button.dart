@@ -15,6 +15,7 @@ class ConnectButton extends StatelessWidget {
         child: FloatingActionButton(
           onPressed: () => {
             showModalBottomSheet(
+              backgroundColor: Colors.black,
                 context: context,
                 builder: (BuildContext context) {
                   return SizedBox(
@@ -22,7 +23,10 @@ class ConnectButton extends StatelessWidget {
                     child: Column(
                       children: [
                         FileButton(),
-                        ButtonText(),
+                        Spacer(),
+                        ButtonText(text: "Text"),
+                        Spacer(),
+                        ButtonText(text: "Link")
                       ],
                     ),
                   );

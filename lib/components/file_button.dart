@@ -12,6 +12,9 @@ class FileButton extends StatelessWidget {
     } else {
       return Center(
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromRGBO(56, 182, 255, 1)
+          ),
             onPressed: (() {
               getFile();
             }),
