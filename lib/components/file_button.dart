@@ -11,14 +11,19 @@ class FileButton extends StatelessWidget {
       return Text("IOS");
     } else {
       return Center(
-        child: ElevatedButton(
+        child: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromRGBO(56, 182, 255, 1)
+            backgroundColor: Color.fromRGBO(56, 182, 255, 1),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+            fixedSize: Size(175, 75),
           ),
+            icon: Icon(Icons.file_upload, color: Colors.white, size: 22,),
             onPressed: (() {
               getFile();
             }),
-            child: Text("File")),
+            label: Text("File", style: TextStyle(color: Colors.white, fontSize: 22),),),
       );
     }
   }

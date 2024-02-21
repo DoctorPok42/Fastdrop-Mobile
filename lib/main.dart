@@ -1,13 +1,18 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share_everything_mobile/components/main_button.dart';
-import 'package:share_everything_mobile/components/bottom_page.dart';
+import 'package:share_everything_mobile/components/connect_button.dart';
+import 'package:share_everything_mobile/components/footer.dart';
 import 'package:share_everything_mobile/code/connection.dart';
+import 'package:word_generator/word_generator.dart';
+
+final username = WordGenerator().randomName();
+final Connection connection = Connection(username: username);
 
 void main() {
   runApp(MyApp());
-  connection();
+  connection.connection();
+  print(connection.users);
 }
 
 class MyApp extends StatelessWidget {
@@ -50,10 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacer(),
-          MainButton(),
+          ConnectButton(username: username,),
           Spacer(),
           BottomPage(
-            label: "Logards",
+            label: username,
             pathImage: "assets/logo.ico",
           ),
         ],

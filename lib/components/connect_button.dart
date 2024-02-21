@@ -1,21 +1,25 @@
 
 import 'package:flutter/material.dart';
-import 'package:share_everything_mobile/components/connect_button.dart';
+import 'package:share_everything_mobile/components/device_button.dart';
+import 'package:share_everything_mobile/main.dart';
+import 'package:share_everything_mobile/code/connection.dart';
 
-class MainButton extends StatefulWidget {
-  MainButton({super.key});
+class ConnectButton extends StatefulWidget {
+  ConnectButton({super.key, required this.username});
+
+  final username;
 
   @override
-  State<MainButton> createState() => _MainButtonState();
+  State<ConnectButton> createState() => _ConnectButtonState();
 }
 
-class _MainButtonState extends State<MainButton> {
+class _ConnectButtonState extends State<ConnectButton> {
   bool isPressed = false;
   @override
   Widget build(BuildContext context) {
     return Center(
         child: isPressed
-            ? ConnectButton()
+            ? DeviceButton()
             : ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
@@ -24,7 +28,7 @@ class _MainButtonState extends State<MainButton> {
                   setState(() {
                     isPressed = !isPressed;
                   });
-                  ConnectButton();
+                  DeviceButton();
                 },
                 child: Text(
                   "Se connecter",

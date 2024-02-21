@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:share_everything_mobile/components/file_button.dart';
-import 'package:share_everything_mobile/components/text_button.dart';
+import 'package:share_everything_mobile/components/button_text.dart';
 
-class ConnectButton extends StatelessWidget {
-  ConnectButton({
+class DeviceButton extends StatelessWidget {
+  DeviceButton({
     super.key,
   });
 
