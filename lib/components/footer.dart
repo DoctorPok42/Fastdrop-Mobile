@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share_everything_mobile/components/bottom_icon1.dart';
+import 'package:share_everything_mobile/components/icon.dart';
 import 'package:share_everything_mobile/components/bottom_text1.dart';
 import 'package:share_everything_mobile/components/bottom_text2.dart';
 

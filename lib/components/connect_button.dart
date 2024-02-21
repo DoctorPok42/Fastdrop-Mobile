@@ -1,44 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:share_everything_mobile/components/file_button.dart';
-import 'package:share_everything_mobile/components/text_button.dart';
 
-class ConnectButton extends StatelessWidget {
-  ConnectButton({
-    super.key,
-  });
+import 'package:flutter/material.dart';
+import 'package:share_everything_mobile/components/connect_button.dart';
+
+class MainButton extends StatefulWidget {
+  MainButton({super.key});
 
   @override
+  State<MainButton> createState() => _MainButtonState();
+}
+
+class _MainButtonState extends State<MainButton> {
+  bool isPressed = false;
+  @override
   Widget build(BuildContext context) {
-    return (SizedBox(
-        width: 75,
-        height: 75,
-        child: FloatingActionButton(
-          onPressed: () => {
-            showModalBottomSheet(
-              backgroundColor: Colors.black,
-                context: context,
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    height: 400,
-                    child: Column(
-                      children: [
-                        FileButton(),
-                        Spacer(),
-                        ButtonText(text: "Text"),
-                        Spacer(),
-                        ButtonText(text: "Link")
-                      ],
-                    ),
-                  );
-                })
-          },
-          backgroundColor: Color.fromRGBO(56, 182, 255, 1),
-          shape: CircleBorder(),
-          child: Icon(
-            Icons.laptop,
-            size: 35,
-            color: Colors.white,
-          ),
-        )));
+    return Center(
+        child: isPressed
+            ? ConnectButton()
+            : ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Color.fromRGBO(56, 182, 255, 1))),
+                onPressed: () {
+                  setState(() {
+                    isPressed = !isPressed;
+                  });
+                  ConnectButton();
+                },
+                child: Text(
+                  "Se connecter",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ));
   }
 }
