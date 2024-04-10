@@ -1,22 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share_everything_mobile/code/connection.dart';
+
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 class ButtonText extends StatefulWidget {
   ButtonText({
     super.key,
     required this.text,
     required this.icon,
+    required this.username,
+    required this.socketId,
+    required this.connection
   });
 
+  final Connection connection;
+  final String socketId;
+  final String username;
   final String text;
   final IconData icon;
+  late Socket socket;
 
   @override
   State<ButtonText> createState() => _ButtonText();
 }
 
 class _ButtonText extends State<ButtonText> {
+
+  final myController = TextEditingController();
+
   late TextEditingController controller;
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton.icon(
@@ -44,13 +65,29 @@ class _ButtonText extends State<ButtonText> {
           return AlertDialog(
             title: Text(widget.text),
             content: TextField(
+              controller: myController,
               autofocus: true,
               decoration: InputDecoration(hintText: "Enter your ${widget.text}"),
             ),
             actions: [
               TextButton(
                 child: Text("Submit"),
-                onPressed: Navigator.of(context).pop,
+                onPressed: () {
+                  if (widget.text == "Link") {
+                    widget.connection.sendUrl(
+                        myController.text,
+                        widget.socketId,
+                        widget.username
+                    );
+                  } else {
+                    widget.connection.sendText(
+                        myController.text,
+                        widget.socketId,
+                        widget.username
+                    );
+                  }
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           );

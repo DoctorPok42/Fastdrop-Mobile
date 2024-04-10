@@ -7,15 +7,14 @@ import 'package:share_everything_mobile/code/connection.dart';
 import 'package:word_generator/word_generator.dart';
 
 final username = WordGenerator().randomName();
-final Connection connection = Connection(username: username);
+
 
 void main() {
   runApp(MyApp());
-  connection.connection();
-  print(connection.users);
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -46,8 +45,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isPressed = false;
+
+  _MyHomePageState();
   @override
   Widget build(BuildContext context) {
+    final Connection connection = Connection(username: username);
+    connection.initializeConnection();
     final appState = context.watch<MyAppState>();
     return Scaffold(
       backgroundColor: Color.fromRGBO(28, 28, 28, 1),
@@ -55,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacer(),
-          ConnectButton(username: username,),
+          ConnectButton(connection: connection),
           Spacer(),
           BottomPage(
             label: username,
