@@ -46,6 +46,14 @@ class Connection {
       users = users.where((element) => element["socketId"] != data).toList();
       _usersStreamController.add(users);
     });
+
+    socket.on("textDownload", (dynamic data) {
+      print(data);
+    });
+
+    socket.on("urlDownload", (dynamic data) {
+      print(data);
+    });
   }
 
   void sendText(String text, String socketId, String username) {
