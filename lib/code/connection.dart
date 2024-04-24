@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:typed_data';
 
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -12,6 +14,9 @@ class Connection {
   final String? username;
   late bool isConnect;
   List<dynamic> users = [];
+  List<dynamic> text = [];
+  List<dynamic> url = [];
+
 
   late Socket socket;
 
@@ -19,6 +24,10 @@ class Connection {
       List<dynamic>>.broadcast();
 
   Stream<List<dynamic>> get usersStream => _usersStreamController.stream;
+  StreamController<List<dynamic>> textStream = StreamController<
+      List<dynamic>>.broadcast();
+  StreamController<List<dynamic>> urlStream = StreamController<
+      List<dynamic>>.broadcast();
 
   void initializeConnection() {
     socket = io(
@@ -48,11 +57,11 @@ class Connection {
     });
 
     socket.on("textDownload", (dynamic data) {
-      print(data);
+      textStream.add(data);
     });
 
     socket.on("urlDownload", (dynamic data) {
-      print(data);
+      url.add(data);
     });
   }
 
@@ -64,6 +73,11 @@ class Connection {
   void sendUrl(String url, String socketId, String username) {
     socket.emit("urlUpload",
         [url, socketId, username]);
+  }
+
+  void sendFile(Uint8List buffer, String fileName, String socketId, String username) {
+    socket.emit("fileUpload",
+        [buffer, fileName, socketId, username]);
   }
 
   void dispose() {
