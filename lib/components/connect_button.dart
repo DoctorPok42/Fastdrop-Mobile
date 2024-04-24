@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:share_everything_mobile/components/device_button.dart';
 import 'package:share_everything_mobile/code/connection.dart';
-
+import 'package:share_everything_mobile/components/pop_up_message.dart';
 class ConnectButton extends StatefulWidget {
   ConnectButton({Key? key, required this.connection}) : super(key: key);
 
@@ -15,9 +15,12 @@ class ConnectButton extends StatefulWidget {
 
 class _ConnectButtonState extends State<ConnectButton> {
   late StreamSubscription<List<dynamic>> _userSubscription;
+  late StreamSubscription<List<dynamic>> _textSubscription;
+  late StreamSubscription<List<dynamic>> _urlSubscription;
   List<String> connectedDevices = [];
   List<String> allSocketId = [];
   List<String> allUsername = [];
+  List<dynamic> message = [];
   bool isPressed = false;
 
   @override
@@ -28,6 +31,11 @@ class _ConnectButtonState extends State<ConnectButton> {
         connectedDevices = users.map((user) => user["deviceType"] as String).toList();
         allSocketId = users.map((user) => user["socketId"] as String).toList();
         allUsername = users.map((user) => user["name"] as String).toList();
+      });
+    });
+    _textSubscription = widget.connection.textStream.stream.listen((text) {
+      setState(() {
+        message = text;
       });
     });
   }
@@ -44,24 +52,22 @@ class _ConnectButtonState extends State<ConnectButton> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isPressed) ...[
+          if (message.isNotEmpty && connectedDevices.isNotEmpty) // Vérifier si la liste message et connectedDevices ne sont pas vides
+            PopUpMessage(
+              message: message[0],
+              buttonText: "Copy",
+              sender: message[1],
+              onPressed: () {
+                print("salut");
+              },
+            ),
+          if (connectedDevices.isNotEmpty) ...[
             for (var i = 0; i < connectedDevices.length; i++)
               DeviceButton(typeDevice: connectedDevices[i], socketId: allSocketId[i], username: allUsername[i], connection: widget.connection),
           ] else ...[
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                MaterialStateProperty.all(Color.fromRGBO(56, 182, 255, 1)),
-              ),
-              onPressed: () {
-                setState(() {
-                  isPressed = true;
-                });
-              },
-              child: Text(
-                "Se connecter",
-                style: TextStyle(color: Colors.white),
-              ),
+            Text(
+              "Connectez-vous pour partager",
+              style: TextStyle(color: Colors.white, fontSize: 22),
             ),
           ],
         ],

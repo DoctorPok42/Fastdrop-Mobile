@@ -20,7 +20,6 @@ class ButtonText extends StatefulWidget {
   final String username;
   final String text;
   final IconData icon;
-  late Socket socket;
 
   @override
   State<ButtonText> createState() => _ButtonText();

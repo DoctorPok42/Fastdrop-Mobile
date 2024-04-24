@@ -1,9 +1,22 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
+import 'dart:io' show File, FileMode, Platform, RandomAccessFile;
 import 'package:file_picker/file_picker.dart';
 
+import '../code/connection.dart';
+
 class FileButton extends StatelessWidget {
-  FileButton({Key? key}) : super(key: key);
+  FileButton({
+    super.key,
+    required this.username,
+    required this.socketId,
+    required this.connection
+  });
+
+  final Connection connection;
+  final String socketId;
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +34,25 @@ class FileButton extends StatelessWidget {
           ),
             icon: Icon(Icons.file_upload, color: Colors.white, size: 22,),
             onPressed: (() {
-              getFile();
+              sendFile();
             }),
             label: Text("File", style: TextStyle(color: Colors.white, fontSize: 22),),),
       );
     }
   }
 
-  getFile() async {
+  void sendFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      print(file);
+      String fileName = file.path.split('/').last;
+      RandomAccessFile accessFile = file.openSync(mode: FileMode.read);
+      Uint8List buffer = Uint8List(await file.length());
+      await accessFile.readInto(buffer);
+      await accessFile.close();
+      print(buffer);
+      connection.sendFile(buffer, fileName, socketId, username);
+    }
   }
 }

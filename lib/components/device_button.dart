@@ -34,7 +34,7 @@ class DeviceButton extends StatelessWidget {
                     child: Column(
                       children: [
                         Spacer(),
-                        FileButton(),
+                        FileButton(username: username, socketId: socketId, connection: connection),
                         Spacer(),
                         ButtonText(text: "Text", icon: Icons.text_fields, username: username, socketId: socketId, connection: connection),
                         Spacer(),
