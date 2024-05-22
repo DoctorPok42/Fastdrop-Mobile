@@ -4,7 +4,7 @@ project(share_everything_mobile LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "share_everything_mobile")
+set(BINARY_NAME "Fastdrop")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
