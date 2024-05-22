@@ -51,7 +51,6 @@ class FileButton extends StatelessWidget {
       Uint8List buffer = Uint8List(await file.length());
       await accessFile.readInto(buffer);
       await accessFile.close();
-      print(buffer);
       connection.sendFile(buffer, fileName, socketId, username);
     }
   }

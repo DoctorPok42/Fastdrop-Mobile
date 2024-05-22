@@ -38,6 +38,11 @@ class _ConnectButtonState extends State<ConnectButton> {
         message = text;
       });
     });
+    _urlSubscription = widget.connection.urlStream.stream.listen((url) {
+      setState(() {
+        message = url;
+      });
+    });
   }
 
   @override
@@ -58,12 +63,15 @@ class _ConnectButtonState extends State<ConnectButton> {
               buttonText: "Copy",
               sender: message[1],
               onPressed: () {
-                print("salut");
               },
             ),
           if (connectedDevices.isNotEmpty) ...[
             for (var i = 0; i < connectedDevices.length; i++)
-              DeviceButton(typeDevice: connectedDevices[i], socketId: allSocketId[i], username: allUsername[i], connection: widget.connection),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                
+                child: DeviceButton(typeDevice: connectedDevices[i], socketId: allSocketId[i], username: allUsername[i], connection: widget.connection),
+              )
           ] else ...[
             Text(
               "Connectez-vous pour partager",
